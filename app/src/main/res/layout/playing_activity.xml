@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:seekarc="http://schemas.android.com/tools"
+    android:id="@+id/playing_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DCDCDC"
+
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/default_blue_light"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            >
+            <FrameLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <ImageButton
+                    android:id="@+id/ic_block"
+                    android:layout_width="240dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_height="240dp"
+                    android:background="@drawable/button_with_curves_white"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+                <com.triggertrap.seekarc.SeekArc
+                    android:id="@+id/seekArc"
+                    android:layout_width="270dp"
+                    android:layout_height="270dp"
+                    android:layout_gravity="center"
+                    android:padding="30dp"
+                    seekarc:rotation="180"
+                    seekarc:startAngle="30"
+                    app:progressColor="@color/progress_gray"
+                    app:arcWidth="5sp"
+                    app:arcColor="#C0C0C0"
+                    seekarc:sweepAngle="300"
+                    seekarc:touchInside="false" />
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="95dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_skip_previous_black_24dp" />
+
+                    <ImageButton
+                        android:id="@+id/ic_play"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:src="@drawable/ic_play_arrow_black_36dp"
+                        android:background="@drawable/button_with_curves"
+                        android:layout_gravity="center_horizontal"
+                        />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_skip_next_black_24dp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:text="#1. Cheap Thrills "
+                android:textSize="20dp"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="16dp"
+                android:text="By Sia Ft. Sean Paul "
+                android:layout_marginBottom="20dp"
+                />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/ic_repeat_one"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_repeat_one_black_24dp"
+                android:background="@drawable/button_with_curves"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp" />
+
+            <ImageButton
+                android:id="@+id/ic_suffle"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_shuffle_black_24dp"
+                android:background="@drawable/button_with_curves"
+                />
+
+            <ImageButton
+                android:id="@+id/ic_repeat"
+                android:layout_width="48dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_repeat_black_24dp"
+                android:background="@drawable/button_with_curves"
+                />
+
+
+            <ImageButton
+                android:id="@+id/playlist_add"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_playlist_add_black_24dp"
+                android:background="@drawable/button_with_curves"
+                />
+
+
+            <ImageButton
+                android:id="@+id/ic_favorite"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_favorite_border_black_24dp"
+                android:background="@drawable/button_with_curves"
+                />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingLeft="20dp"
+        android:paddingEnd="20dp"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/darker_gray" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rating 4.5"
+            android:layout_marginTop="10dp"
+            android:id="@+id/getRating"
+            android:textSize="18sp"
+
+            />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:id="@+id/ratingBar"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:scaleX=".7"
+            android:rating="3.5"
+            android:scaleY=".7"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
+            android:max="5"/>
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
