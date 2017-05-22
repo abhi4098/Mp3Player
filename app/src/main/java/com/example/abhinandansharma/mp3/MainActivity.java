@@ -38,6 +38,7 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -56,16 +57,17 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ((TextView) findViewById(R.id.main_toolbar_title)).setText(R.string.app_name);
         songView = (ListView)findViewById(R.id.song_list);
         songView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int songIndex = position;
-                Intent intent = new Intent(MainActivity.this,Playing_Activity.class);
+                Intent intent = new Intent(getApplicationContext(),MusicPlayerActivity.class);
                 intent.putExtra("Song_number",songIndex);
                 setResult(100, intent);
                 startActivity(intent);
-                finish();
+                //finish();
             }
 
         });
@@ -101,8 +103,10 @@ public class MainActivity extends AppCompatActivity {
 
         ContentResolver musicContentResolver = getContentResolver();
         Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        Uri imageUri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI;
         Cursor musicCursor = musicContentResolver.query(musicUri,null,null,null,null);
-        if(musicCursor!=null && musicCursor.moveToFirst()){
+        Cursor imageCursor = musicContentResolver.query(imageUri,null,null,null,null);
+        if(musicCursor!=null && musicCursor.moveToFirst()&& imageCursor!=null && imageCursor.moveToFirst() ){
             //get columns
             int titleColumn = musicCursor.getColumnIndex
                     (MediaStore.Audio.Media.TITLE);
@@ -110,16 +114,20 @@ public class MainActivity extends AppCompatActivity {
                     (MediaStore.Audio.Media._ID);
             int artistColumn = musicCursor.getColumnIndex
                     (MediaStore.Audio.Media.ARTIST);
+            int songImage = imageCursor.getColumnIndex
+                    (MediaStore.Audio.Albums.ALBUM_ART);
 
             do {
                 long thisId = musicCursor.getLong(idColumn);
                 String thisTitle = musicCursor.getString(titleColumn);
                 String thisArtist = musicCursor.getString(artistColumn);
-                songList.add(new Song(thisId, thisTitle, thisArtist));
+                String thisImage = imageCursor.getString(songImage);
+                songList.add(new Song(thisId, thisTitle, thisArtist,thisImage));
             }
-            while (musicCursor.moveToNext());
+            while (musicCursor.moveToNext()&& imageCursor.moveToNext());
         }
-
+         musicCursor.close();
+         imageCursor.close();
         Collections.sort(songList, new Comparator<Song>() {
             public int compare(Song a, Song b) {
                 return a.getTitle().compareTo(b.getTitle());

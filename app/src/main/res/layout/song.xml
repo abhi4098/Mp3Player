@@ -3,21 +3,24 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="#80ffffff"
     android:padding="5dp" >
 
     <TextView
         android:id="@+id/song_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:textSize="20sp"
+        android:maxLines="1"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/song_artist"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FF000f"
+        android:textColor="#c0c0c0"
+        android:maxLines="1"
         android:textSize="18sp" />
 
 </LinearLayout>

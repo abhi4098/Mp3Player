@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:seekarc="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/playing_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DCDCDC"
+    android:background="#CD5C5C"
+    android:orientation="vertical"
+    tools:context=".MusicPlayerActivity"
 
-    android:orientation="vertical">
+    >
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/default_blue_light"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:elevation="0dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:background="#80000000"
+        >
 
+    <LinearLayout
+        android:id="@+id/main_toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/main_toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+    </android.support.v7.widget.Toolbar>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,10 +56,10 @@
                 android:layout_height="match_parent" >
 
                 <ImageButton
-                    android:id="@+id/ic_block"
-                    android:layout_width="240dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_height="240dp"
+                    android:id="@+id/song_image"
+                    android:layout_width="236dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_height="236dp"
                     android:background="@drawable/button_with_curves_white"
                     android:layout_gravity="center_horizontal"
                     />
@@ -55,7 +73,7 @@
                     seekarc:rotation="180"
                     seekarc:startAngle="30"
                     app:progressColor="@color/progress_gray"
-                    app:arcWidth="5sp"
+                    app:arcWidth="4sp"
                     app:arcColor="#C0C0C0"
                     seekarc:sweepAngle="300"
                     seekarc:touchInside="false" />
@@ -71,26 +89,31 @@
                     android:orientation="horizontal">
 
 
-                    <ImageView
+                    <ImageButton
                         android:layout_width="50dp"
+                        android:id="@+id/previous_song"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/ic_skip_previous_black_24dp" />
+                        android:src="@drawable/ic_skip_previous_black_24dp"
+                        android:background="@drawable/round_button_white"
+                        />
 
                     <ImageButton
                         android:id="@+id/ic_play"
                         android:layout_width="85dp"
                         android:layout_height="85dp"
                         android:src="@drawable/ic_play_arrow_black_36dp"
-                        android:background="@drawable/button_with_curves"
+                        android:background="@drawable/round_button_media_player"
                         android:layout_gravity="center_horizontal"
                         />
 
-                    <ImageView
+                    <ImageButton
                         android:layout_width="50dp"
+                        android:id="@+id/next_song"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/ic_skip_next_black_24dp" />
+                        android:src="@drawable/ic_skip_next_black_24dp"
+                        android:background="@drawable/round_button_white" />
 
                 </LinearLayout>
 
@@ -100,19 +123,24 @@
 
 
             <TextView
+                android:id="@+id/song_name"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:text="#1. Cheap Thrills "
-                android:textSize="20dp"
+                android:maxLines="1"
+                android:textSize="18sp"
+                android:text="abhi"
                 android:layout_marginBottom="5dp"/>
 
             <TextView
+                android:id="@+id/song_artist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="abhi"
                 android:layout_gravity="center_horizontal"
-                android:textSize="16dp"
-                android:text="By Sia Ft. Sean Paul "
+                android:textSize="15sp"
+
                 android:layout_marginBottom="20dp"
                 />
 
@@ -132,18 +160,18 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_repeat_one_black_24dp"
-                android:background="@drawable/button_with_curves"
+                android:background="@drawable/round_button_media_player"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp" />
 
             <ImageButton
-                android:id="@+id/ic_suffle"
+                android:id="@+id/ic_shuffle"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/ic_shuffle_black_24dp"
-                android:background="@drawable/button_with_curves"
+                android:background="@drawable/round_button_media_player"
                 />
 
             <ImageButton
@@ -153,7 +181,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_repeat_black_24dp"
-                android:background="@drawable/button_with_curves"
+                android:background="@drawable/round_button_media_player"
                 />
 
 
@@ -164,7 +192,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/ic_playlist_add_black_24dp"
-                android:background="@drawable/button_with_curves"
+                android:background="@drawable/round_button_media_player"
                 />
 
 
@@ -175,7 +203,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/ic_favorite_border_black_24dp"
-                android:background="@drawable/button_with_curves"
+                android:background="@drawable/round_button_media_player"
                 />
         </LinearLayout>
 
