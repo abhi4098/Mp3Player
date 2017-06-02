@@ -1,4 +1,4 @@
-package com.example.abhinandansharma.mp3;
+package com.example.abhinandansharma.mp3.model;
 
 /**
  * Created by abhinandan.sharma on 9/30/2015.

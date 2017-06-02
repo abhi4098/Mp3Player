@@ -3,4 +3,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="navigation_drawer_items_array">
+        <item>All Songs</item>
+        <item>Artist</item>
+        <item>Favorites</item>
+    </string-array>
 </resources>

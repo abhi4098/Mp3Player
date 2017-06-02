@@ -6,7 +6,6 @@
     android:id="@+id/playing_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CD5C5C"
     android:orientation="vertical"
     tools:context=".MusicPlayerActivity"
 
@@ -17,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        android:background="#80000000"
+        android:background="#CC000000"
         >
 
     <LinearLayout
@@ -38,9 +37,12 @@
     </LinearLayout>
     </android.support.v7.widget.Toolbar>
     <LinearLayout
+        android:id="@+id/ll_inside"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="#CC808080"
+        android:orientation="vertical"
+        >
 
 
 
@@ -48,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             >
             <FrameLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -129,7 +131,16 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:textSize="18sp"
-                android:text="abhi"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:freezesText="true"
+                android:gravity="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:layout_marginBottom="5dp"/>
 
             <TextView
@@ -137,10 +148,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="abhi"
                 android:layout_gravity="center_horizontal"
                 android:textSize="15sp"
-
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:freezesText="true"
+                android:gravity="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scrollHorizontally="true"
                 android:layout_marginBottom="20dp"
                 />
 
@@ -152,7 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="80dp"
             android:orientation="horizontal">
 
             <ImageButton
@@ -212,7 +230,7 @@
     </LinearLayout>
 
 
-    <LinearLayout
+  <!--  <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -255,7 +273,7 @@
 
     </LinearLayout>
 
-
+-->
 
 
 </LinearLayout>
