@@ -7,6 +7,12 @@
     <string-array name="navigation_drawer_items_array">
         <item>All Songs</item>
         <item>Artist</item>
-        <item>Favorites</item>
+        <item>Album</item>
+        <item>Genres</item>
+        <item>Playlist</item>
+
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

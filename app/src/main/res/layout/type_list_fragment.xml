@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#80ffffff"
+    tools:context=".MainActivity"
+    android:id="@+id/llAllSongs">
+
+    <!-- <android.support.v7.widget.Toolbar
+         android:id="@+id/main_toolbar"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:minHeight="?attr/actionBarSize"
+         android:background="#000000"
+         >
+
+         <LinearLayout
+             android:id="@+id/main_toolbar_layout"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:gravity="center"
+             android:orientation="vertical">
+
+             <TextView
+                 android:id="@+id/main_toolbar_title"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textStyle="bold"
+                 android:textColor="#ffffff"
+                 android:textSize="20sp"/>
+
+         </LinearLayout>
+     </android.support.v7.widget.Toolbar>-->
+<!--    <ListView
+        android:id="@+id/common_type_list"
+        android:layout_width="fill_parent"
+        android:scrollbars="none"
+        android:layout_height="wrap_content"
+        >
+    </ListView>-->
+    <GridView
+        android:layout_margin="10dp"
+        android:id="@+id/common_type_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:columnWidth="100dp"
+        android:numColumns="auto_fit"
+        android:scrollbars="none"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        />
+
+</LinearLayout>

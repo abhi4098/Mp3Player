@@ -44,7 +44,7 @@ public class SongAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return songs.get(position).getID();
     }
 
     @Override
@@ -63,14 +63,22 @@ public class SongAdapter extends BaseAdapter {
         //get title and artist strings
         songView.setText(currSong.getTitle());
         artistView.setText(currSong.getArtist());
-        songImage =currSong.getImage();
+       /* songImage =currSong.getImage();
         if (songImage !=null) {
             Bitmap bm = BitmapFactory.decodeFile(songImage);
             Bitmap resizedImage = Bitmap.createScaledBitmap(bm, 165, 165, true);
             roundedImage = new RoundImage(resizedImage);
             songImageBtn.setImageDrawable(roundedImage);
 
-        }
+        }*/
+       /* else
+        {
+            Bitmap bm = BitmapFactory.decodeFile(R.drawable.end);
+            Bitmap resizedImage = Bitmap.createScaledBitmap(bm, 165, 165, true);
+            roundedImage = new RoundImage(resizedImage);
+            songImageBtn.setImageDrawable(roundedImage);
+
+        }*/
         //set position as tag
         songLay.setTag(position);
         return songLay;

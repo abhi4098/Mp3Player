@@ -1,10 +1,6 @@
 package com.example.abhinandansharma.mp3;
 
-/*
-1. Bound service
-2. Onstartcommand for mp3 in case the app is closed the song continue to play in background
-3.
- */
+
 
 
 import android.Manifest;
@@ -50,17 +46,20 @@ import android.widget.TextView;
 import com.example.abhinandansharma.mp3.adapters.DrawerItemCustomAdapter;
 import com.example.abhinandansharma.mp3.fragments.AllSongsFragment;
 import com.example.abhinandansharma.mp3.fragments.ArtistFragment;
-import com.example.abhinandansharma.mp3.fragments.FavoritesFragment;
+import com.example.abhinandansharma.mp3.fragments.AlbumFragment;
+import com.example.abhinandansharma.mp3.fragments.GenresFragment;
+import com.example.abhinandansharma.mp3.fragments.PlaylistFragment;
 import com.example.abhinandansharma.mp3.model.DrawerModel;
 import com.example.abhinandansharma.mp3.model.Song;
+import com.example.abhinandansharma.mp3.model.TypeModel;
 import com.example.abhinandansharma.mp3.utility.RoundImage;
 
-import static com.example.abhinandansharma.mp3.R.id.llAllSongs;
 import static com.example.abhinandansharma.mp3.fragments.AllSongsFragment.songsList;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener ,SeekBar.OnSeekBarChangeListener {
     public static ArrayList<Song> songList;
+    public static ArrayList<TypeModel> albumList ;
     String TAG = "abhi";
     SeekBar sbMusic;
     int seekbarProgress;
@@ -71,13 +70,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Utilities utils;
     RoundImage roundedImage;
     private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
     android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
     public  static MediaPlayer mp;
     int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
-    LinearLayout llMediaControls;
+    public static LinearLayout llMediaControls;
     int playingSongIndex;
-    ImageButton imPlaySong;
+    public static ImageButton imPlaySong;
     ImageView ivSongImage;
     TextView tvSongName;
     TextView tvSongArtist;
@@ -94,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mTitle = mDrawerTitle = getTitle();
         mNavigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_drawer_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -106,30 +103,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sbMusic=(SeekBar)findViewById(R.id.seekBar1);
         utils = new Utilities();
         sbMusic.setOnSeekBarChangeListener(this);
-        llMediaControls.setOnClickListener(this);
+        albumList = new ArrayList<>();
+        getAlbumList();
+
+
         setUpToolbar();
         setUpDrawer();
         if (getFragmentManager().findFragmentById(R.id.fragment_frame) == null) {
             selectDrawerItem(0);
         }
-       /* songView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int songIndex = position;
-                Intent intent = new Intent(getApplicationContext(), MusicPlayerActivity.class);
-                intent.putExtra("Song_number", songIndex);
-                setResult(100, intent);
-                startActivity(intent);
-                //finish();
-            }
 
-        });*/
+
         songList = new ArrayList<>();
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            //Log.e("abhi", "onCreate: not granted ");
+
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
@@ -140,21 +130,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
 
-                return;
             }
         } else
             getSongList();
+     //   getSongListGenre();
 
 
     }
 
+    private void getAlbumList() {
+
+
+        ContentResolver musicContentResolver = getContentResolver();
+        Uri albumUri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI;
+        Cursor albumCursor = musicContentResolver.query(albumUri, null, null, null, null);
+        if (albumCursor != null && albumCursor.moveToFirst()) {
+            //get columns
+            int albumColumn = albumCursor.getColumnIndex
+                    (MediaStore.Audio.Albums.ALBUM_ART);
+            int idColumn = albumCursor.getColumnIndex
+                    (MediaStore.Audio.Albums._ID);
+            int numOfTracksColumn = albumCursor.getColumnIndex
+                    (MediaStore.Audio.Albums.NUMBER_OF_SONGS);
+
+            do {
+                long id = albumCursor.getLong(idColumn);
+                String title = albumCursor.getString(albumColumn);
+                String numOfTracks = albumCursor.getString(numOfTracksColumn);
+                Log.e(TAG, "getSongListGenre: " +title + "  " + id  + "  " + numOfTracks );
+              albumList.add(new TypeModel(id, title,numOfTracks));
+            }
+            while (albumCursor.moveToNext());
+        }
+        albumCursor.close();
+        /*Collections.sort(albumList, new Comparator<TypeModel>() {
+            public int compare(TypeModel a, TypeModel b) {
+                return a.getName().compareTo(b.getName());
+            }
+        });*/
+    }
+
 
     private void setUpDrawer() {
-        DrawerModel[] drawerItem = new DrawerModel[3];
+        DrawerModel[] drawerItem = new DrawerModel[5];
 
         drawerItem[0] = new DrawerModel(R.drawable.ic_play_arrow_black_24dp, "All Songs");
         drawerItem[1] = new DrawerModel(R.drawable.ic_queue_music_black_24dp, "Artist");
-        drawerItem[2] = new DrawerModel(R.drawable.ic_favorite_border_black_24dp, "Favorites");
+        drawerItem[2] = new DrawerModel(R.drawable.ic_favorite_border_black_24dp, "Album");
+        drawerItem[3] = new DrawerModel(R.drawable.ic_favorite_border_black_24dp, "Genres");
+        drawerItem[4] = new DrawerModel(R.drawable.ic_favorite_border_black_24dp, "Playlist");
+
         //drawerItem[3] = new DrawerModel(R.drawable.table, "Find My Phone");
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -192,12 +217,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-        getSupportActionBar().setTitle("Dr Mobo Smart Security");
-    }
-
 
 
     public void setMp3Player(int songIndex)
@@ -208,7 +227,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 mp.release();
                 mp = null;
-                Log.e("abhi", "mp not null " );
 
             } catch (Exception e) {
 
@@ -220,7 +238,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else
 
         {
-            Log.e("abhi", "mp null " );
             mp = new MediaPlayer();
             playSong(songIndex);
         }
@@ -230,11 +247,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void playSong(int songIndex) {
 
-        Log.e(TAG, "onClick: song index from fragment------------- " + songIndex);
-       /* MusicPlayerActivity musicPlayerActivity = new MusicPlayerActivity();
-        musicPlayerActivity.playSong(songIndex);*/
         mp.reset();
         Song playSong = songsList.get(songIndex);
         songTitle = playSong.getTitle();
@@ -250,6 +265,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Bitmap resizedImage = Bitmap.createScaledBitmap(bm, 710, 710, true);
             roundedImage = new RoundImage(resizedImage);
             ivSongImage.setImageDrawable(roundedImage);
+        }
+        else
+        {
+            ivSongImage.setImageDrawable(getDrawable(R.drawable.end));
         }
 
 
@@ -267,8 +286,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         imPlaySong.setImageResource(R.drawable.ic_pause_black_36dp);
+
 
 
 
@@ -278,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
-        // updateProgressBar();
+
     }
 
     private void updateProgressBar() {
@@ -292,17 +311,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             long totalDuration = mp.getDuration();
             long currentDuration = mp.getCurrentPosition();
 
-            // Displaying Total Duration time
-            //songTotalDurationLabel.setText(""+utils.milliSecondsToTimer(totalDuration));
-            // Displaying time completed playing
-            //songCurrentDurationLabel.setText(""+utils.milliSecondsToTimer(currentDuration));
-
-            // Updating progress bar
             int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
-            //Log.d("Progress", ""+progress);
             sbMusic.setProgress(progress);
 
-            // Running this thread after 100 milliseconds
             mHandler.postDelayed(this, 100);
         }
     };
@@ -328,42 +339,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ContentResolver musicContentResolver = getContentResolver();
         Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Uri imageUri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI;
         Cursor musicCursor = musicContentResolver.query(musicUri, null, null, null, null);
-        Cursor imageCursor = musicContentResolver.query(imageUri, null, null, null, null);
-        if (musicCursor != null && musicCursor.moveToFirst() && imageCursor != null && imageCursor.moveToFirst()) {
-            //get columns
+        if (musicCursor != null && musicCursor.moveToFirst() ) {
+
             int titleColumn = musicCursor.getColumnIndex
                     (MediaStore.Audio.Media.TITLE);
             int idColumn = musicCursor.getColumnIndex
                     (MediaStore.Audio.Media._ID);
             int artistColumn = musicCursor.getColumnIndex
                     (MediaStore.Audio.Media.ARTIST);
-            int songImage = imageCursor.getColumnIndex
-                    (MediaStore.Audio.Albums.ALBUM_ART);
+            int   songImageIdColumn = musicCursor.getColumnIndex
+                        (MediaStore.Audio.Media.ALBUM_ID);
 
-            do {
-                long thisId = musicCursor.getLong(idColumn);
-                String thisTitle = musicCursor.getString(titleColumn);
-                String thisArtist = musicCursor.getString(artistColumn);
-                String thisImage = imageCursor.getString(songImage);
-                songList.add(new Song(thisId, thisTitle, thisArtist, thisImage));
-            }
-            while (musicCursor.moveToNext() && imageCursor.moveToNext());
+             while (musicCursor.moveToNext())
+             {
+                 long id = musicCursor.getLong(idColumn);
+                 String title = musicCursor.getString(titleColumn);
+                 String artist = musicCursor.getString(artistColumn);
+                 int songImageId =musicCursor.getInt(songImageIdColumn);
+                 for (int i=0; i<albumList.size(); i++)
+                 {
+                      long albumId = albumList.get(i).getID();
+                     if (songImageId == albumId)
+                     {
+                         String songImage = albumList.get(i).getName();
+                         Log.e(TAG, "getSongList: " + id + " " + songImageId);
+                         songList.add(new Song(id, title, artist, songImage));
+                     }
+                 }
+
+
+
+
+
+             }
+
         }
         musicCursor.close();
-        imageCursor.close();
         Collections.sort(songList, new Comparator<Song>() {
             public int compare(Song a, Song b) {
                 return a.getTitle().compareTo(b.getTitle());
             }
         });
 
-       /* SongAdapter songAdt = new SongAdapter(this, songList);
-        Log.e("abhi", "onRequestPermissionsResult:songlist " + songList);
-        songView.setAdapter(songAdt);*/
 
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
@@ -378,6 +400,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
+
 
     @Override
     protected void onDestroy() {
@@ -396,13 +420,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        seekbarProgress = sbMusic.getProgress();
-        Intent intent = new Intent(MainActivity.this, MusicPlayerActivity.class);
-        intent.putExtra("Song_number", playingSongIndex);
-        intent.putExtra("media_player_state", "true");
-        intent.putExtra("seekbar_progress" , seekbarProgress);
-        //setResult(100, intent);
-        startActivityForResult(intent,1);
+        switch (v.getId()) {
+
+            case R.id.ic_activity_play:
+                if (mp.isPlaying()) {
+                    if (mp != null) {
+                        mp.pause();
+                        imPlaySong.setImageResource(R.drawable.ic_play_arrow_black_36dp);
+                    }
+                } else {
+                    if (mp != null) {
+                        mp.start();
+                        imPlaySong.setImageResource(R.drawable.ic_pause_black_36dp);
+                    }
+                }
+                break;
+
+            case R.id.ll_media_controls:
+                 seekbarProgress = sbMusic.getProgress();
+                 Intent intent = new Intent(MainActivity.this, MusicPlayerActivity.class);
+                 intent.putExtra("Song_number", playingSongIndex);
+                 intent.putExtra("media_player_state", "true");
+                 intent.putExtra("seekbar_progress", seekbarProgress);
+                 //setResult(100, intent);
+                startActivityForResult(intent, 1);
+                break;
+
+
+        }
     }
 
 
@@ -411,9 +456,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == 1) {
 
             if(resultCode == RESULT_OK){
+
+                if (mp.isPlaying()) {
+                    imPlaySong.setImageResource(R.drawable.ic_pause_black_36dp);
+                } else {
+                    imPlaySong.setImageResource(R.drawable.ic_play_arrow_black_36dp);
+                }
+
+
                 int currentSongIndex = data.getIntExtra("currentSongIndex",0);
                 playingSongIndex =currentSongIndex;
-                Log.e("abhi", "onActivityResult: "+currentSongIndex );
                 Song playSong = songsList.get(currentSongIndex);
                 songTitle = playSong.getTitle();
                 songArtist = playSong.getArtist();
@@ -429,9 +481,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
             }
-            if (resultCode == RESULT_CANCELED) {
+          /*  if (resultCode == RESULT_CANCELED) {
                 //Do nothing?
-            }
+            }*/
         }
     }
 
@@ -447,16 +499,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mHandler.removeCallbacks(mUpdateTimeTask);
     }
 
+
+
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         mHandler.removeCallbacks(mUpdateTimeTask);
         int totalDuration = mp.getDuration();
         int currentPosition = utils.progressToTimer(seekBar.getProgress(), totalDuration);
-
-        // forward or backward to certain seconds
         mp.seekTo(currentPosition);
-
-        // update timer progress again
         updateProgressBar();
     }
 
@@ -484,7 +534,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragment = new ArtistFragment();
                 break;
             case 2:
-                fragment = new FavoritesFragment();
+                fragment = new AlbumFragment();
+                break;
+            case 3:
+                fragment = new GenresFragment();
+                break;
+            case 4:
+                fragment = new PlaylistFragment();
                 break;
 
             default:

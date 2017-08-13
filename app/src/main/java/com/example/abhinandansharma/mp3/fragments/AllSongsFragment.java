@@ -21,6 +21,9 @@ import com.example.abhinandansharma.mp3.utility.RoundImage;
 
 import java.util.ArrayList;
 
+import static com.example.abhinandansharma.mp3.MainActivity.imPlaySong;
+import static com.example.abhinandansharma.mp3.MainActivity.llMediaControls;
+
 /**
  * Created by Abhinandan on 10/12/15.
  */
@@ -39,13 +42,13 @@ public class AllSongsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_allsongs, container, false);
-        songView = (ListView) rootView.findViewById(R.id.song_list);
+        View rootView = inflater.inflate(R.layout.song_list_fragment, container, false);
+        songView = (ListView) rootView.findViewById(R.id.common_song_list);
         llAllSongs = (LinearLayout) rootView.findViewById(R.id.llAllSongs);
         songsList = MainActivity.songList;
         SongAdapter songAdt = new SongAdapter(getActivity(), songsList);
         songView.setAdapter(songAdt);
-          songView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        songView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -58,12 +61,15 @@ public class AllSongsFragment extends Fragment {
                 if (songImage !=null) {
                     Bitmap bm = BitmapFactory.decodeFile(songImage);
                     llAllSongs.setBackground(Drawable.createFromPath(songImage));
+                    llMediaControls.setOnClickListener((View.OnClickListener) getActivity());
+                    imPlaySong.setOnClickListener((View.OnClickListener) getActivity());
                 }
-                /*Intent intent = new Intent(getActivity(), MusicPlayerActivity.class);
-                intent.putExtra("Song_number", songIndex);
-                //setResult(100, intent);
-                startActivity(intent);
-                //finish();*/
+                else
+                {
+                    llAllSongs.setBackground(getResources().getDrawable(R.drawable.bg2));
+
+                }
+
             }
 
         });

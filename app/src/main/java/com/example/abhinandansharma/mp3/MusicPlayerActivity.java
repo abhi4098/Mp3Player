@@ -74,15 +74,12 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.playing_activity);
-        ((TextView) findViewById(R.id.main_toolbar_title)).setText(R.string.app_name);
+
         intent = getIntent();
-
-
         if(intent != null) {
             currentSongIndex = intent.getIntExtra("Song_number", 0);
             playerState = intent.getStringExtra("media_player_state");
             seekbarProgress= getIntent().getIntExtra("seekbar_progress",0);
-            Log.e("abhi", "onCreate: Song_number" +currentSongIndex );
         }
 
 
@@ -100,10 +97,9 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         utils = new Utilities();
 
         songProgressBar.setOnSeekArcChangeListener(this);
-        // Important
-
-        // Getting all songs list
         songsList = MainActivity.songList;
+
+
         playSong(currentSongIndex);
 
         mp.setOnCompletionListener(this);
@@ -204,7 +200,6 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
 
 
     public void  playSong(int songIndex) {
-        Log.e("abhi", "playSong: " +mp );
 
             Song playSong = songsList.get(songIndex);
             songTitle = playSong.getTitle();
@@ -225,7 +220,11 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
 
 
 
+        if (mp.isPlaying()) {
             btnPlay.setImageResource(R.drawable.ic_pause_black_36dp);
+        } else {
+            btnPlay.setImageResource(R.drawable.ic_play_arrow_black_36dp);
+        }
 
 
 
@@ -251,9 +250,6 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         else
 
         {
-            Log.e("abhi", "musicPlayerActivity====================================== " );
-           // mp = new MediaPlayer();
-           // playSong(currentSongIndex);
             mp.reset();
 
         long currSong = playSong.getID();

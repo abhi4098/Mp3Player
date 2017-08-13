@@ -25,43 +25,38 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-/**
- * Created by Abhinandan on 10/12/15.
- */
-public class ArtistFragment extends Fragment {
 
-
-
-    public static ArrayList<TypeModel> artistList;
+public class GenresFragment extends Fragment {
+    public static ArrayList<TypeModel> genreList;
     String TAG = "abhi";
-    private GridView artistView;
+    private GridView genreView;
     private String songImage="";
     RoundImage roundedImage;
     public static LinearLayout llAllSongs;
     int songIndex;
 
-    public ArtistFragment() {
+    public GenresFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.type_list_fragment, container, false);
-        artistView = (GridView) rootView.findViewById(R.id.common_type_list);
-        //  llAllSongs = (LinearLayout) rootView.findViewById(R.id.llAllSongs);
-        artistList = new ArrayList<>();
-        getArtistList();
-        TypeAdapter typeAdapter = new TypeAdapter(getActivity(), artistList);
-        artistView.setAdapter(typeAdapter);
-        artistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        genreView = (GridView) rootView.findViewById(R.id.common_type_list);
+      //  llAllSongs = (LinearLayout) rootView.findViewById(R.id.llAllSongs);
+        genreList = new ArrayList<>();
+        getSongListGenre();
+        TypeAdapter typeAdapter = new TypeAdapter(getActivity(), genreList);
+        genreView.setAdapter(typeAdapter);
+        genreView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
                 Fragment typeSongFrag= new TypeSongFragment();
                 Bundle args = new Bundle();
-                args.putString("typeId", String.valueOf(artistView.getAdapter().getItemId(position)));
-                args.putString("type","Artists");
+                args.putString("typeId", String.valueOf(genreView.getAdapter().getItemId(position)));
+                args.putString("type","Genres");
                 typeSongFrag.setArguments(args);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragment_frame, typeSongFrag).commit();
@@ -72,30 +67,28 @@ public class ArtistFragment extends Fragment {
         return rootView;
     }
 
-    private void getArtistList() {
+    private void getSongListGenre() {
         ContentResolver musicContentResolver = getActivity().getContentResolver();
-        Uri artistUri = MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI;
-        Cursor artistCursor = musicContentResolver.query(artistUri, null, null, null, null);
-        if (artistCursor != null && artistCursor.moveToFirst()) {
-            //get columns
-            int titleColumn = artistCursor.getColumnIndex
-                    (MediaStore.Audio.Artists.ARTIST);
-            int idColumn = artistCursor.getColumnIndex
-                    (MediaStore.Audio.Artists._ID);
-           /* int numOfTracksColumn = artistCursor.getColumnIndex
-                    (MediaStore.Audio.Genres._COUNT);*/
+        Uri genreUri = MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI;
+        Cursor genreCursor = musicContentResolver.query(genreUri, null, null, null, null);
+        if (genreCursor != null && genreCursor.moveToFirst()) {
+
+            int titleColumn = genreCursor.getColumnIndex
+                    (MediaStore.Audio.Genres.NAME);
+            int idColumn = genreCursor.getColumnIndex
+                    (MediaStore.Audio.Genres._ID);
+
 
             do {
-                long thisId = artistCursor.getLong(idColumn);
-                String thisTitle = artistCursor.getString(titleColumn);
-                // String thisNumOfTracks = artistCursor.getString(numOfTracksColumn);
+                long thisId = genreCursor.getLong(idColumn);
+                String thisTitle = genreCursor.getString(titleColumn);
                 Log.e(TAG, "getSongListGenre: " +thisTitle + "  " + thisId );
-                artistList.add(new TypeModel(thisId, thisTitle));
+                genreList.add(new TypeModel(thisId, thisTitle));
             }
-            while (artistCursor.moveToNext());
+            while (genreCursor.moveToNext());
         }
-        artistCursor.close();
-        Collections.sort(artistList, new Comparator<TypeModel>() {
+        genreCursor.close();
+        Collections.sort(genreList, new Comparator<TypeModel>() {
             public int compare(TypeModel a, TypeModel b) {
                 return a.getName().compareTo(b.getName());
             }

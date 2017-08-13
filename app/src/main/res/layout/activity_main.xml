@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:background="#CD5C5C"
+    android:background="#000000"
     android:layout_height="match_parent" >
 
 
@@ -43,7 +43,8 @@
 
           <SeekBar
               android:id="@+id/seekBar1"
-              android:layout_width="match_parent"
+              android:layout_marginStart="40dp"
+              android:layout_width="265dp"
               android:layout_height="wrap_content"
               android:layout_gravity="top"
               />
@@ -53,15 +54,18 @@
                android:layout_height="wrap_content"
                android:gravity="bottom"
                android:id="@+id/ll_media_controls"
-               android:layout_gravity="bottom">
+               android:layout_gravity="bottom"
+              >
 
 
               <ImageView
                   android:id="@+id/song_image_small"
-                  android:layout_width="60dp"
-                  android:layout_height="60dp"
+                  android:layout_width="55dp"
+                  android:layout_height="55dp"
                   android:layout_gravity="center"
-                  android:background="@drawable/button_with_curves"
+                  android:src="@drawable/end"
+                  android:background="@drawable/button_with_curves_white"
+                  android:layout_margin="5dp"
                   />
 
 
@@ -71,7 +75,7 @@
                   android:orientation="vertical">
               <TextView
                   android:id="@+id/activity_song_name"
-                  android:layout_width="140dp"
+                  android:layout_width="210dp"
                   android:layout_gravity="center_horizontal"
                   android:layout_height="wrap_content"
                   android:maxLines="1"
@@ -83,7 +87,7 @@
                   android:freezesText="true"
                   android:gravity="center"
                   android:marqueeRepeatLimit="marquee_forever"
-                  android:paddingLeft="10dp"
+                  android:paddingLeft="20dp"
                   android:paddingRight="10dp"
                   android:scrollHorizontally="true"
                   android:singleLine="true"
@@ -91,7 +95,7 @@
 
               <TextView
                   android:id="@+id/activity_song_artist"
-                  android:layout_width="140dp"
+                  android:layout_width="210dp"
                   android:layout_height="wrap_content"
                   android:maxLines="1"
                   android:layout_gravity="center_horizontal"
@@ -103,7 +107,7 @@
                   android:freezesText="true"
                   android:gravity="center"
                   android:marqueeRepeatLimit="marquee_forever"
-                  android:paddingLeft="10dp"
+                  android:paddingLeft="20dp"
                   android:paddingRight="10dp"
                   android:scrollHorizontally="true"
 
@@ -111,31 +115,34 @@
 
               </LinearLayout>
 
-              <ImageButton
+            <!--  <ImageButton
                   android:layout_width="40dp"
                   android:id="@+id/previous_song"
                   android:layout_height="40dp"
                   android:layout_gravity="center"
                   android:src="@drawable/ic_skip_previous_black_24dp"
                   android:background="@drawable/round_button_white"
-                  />
+                  />-->
 
               <ImageButton
                   android:id="@+id/ic_activity_play"
-                  android:layout_width="55dp"
-                  android:layout_height="55dp"
+                  android:layout_width="50dp"
+                  android:layout_height="50dp"
                   android:src="@drawable/ic_play_arrow_black_36dp"
                   android:background="@drawable/round_button_media_player"
-                  android:layout_gravity="center_horizontal"
+                  android:layout_gravity="bottom"
+                  android:layout_marginStart="20dp"
+                  android:layout_marginBottom="5dp"
+
                   />
 
-              <ImageButton
+             <!-- <ImageButton
                   android:layout_width="40dp"
                   android:id="@+id/next_song"
                   android:layout_height="40dp"
                   android:layout_gravity="center"
                   android:src="@drawable/ic_skip_next_black_24dp"
-                  android:background="@drawable/round_button_white" />
+                  android:background="@drawable/round_button_white" />-->
 
 
 </LinearLayout>
